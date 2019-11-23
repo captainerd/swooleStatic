@@ -7,8 +7,6 @@ require_once("includes/class.Swoole_Srv.php");
 $serverIP = "127.0.0.1";
 $serverPORT = 443;
 $wwwDir = "./htdocs";
-
- 
  
 $server = new swoole_websocket_server($serverIP, $serverPORT, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
 $port1 = $server->listen("127.0.0.1", 80, SWOOLE_SOCK_TCP);
@@ -19,13 +17,11 @@ $server->set([
     'open_http2_protocol' => true, // Enable HTTP2 protocol
 ]);
 
-
 $server->on('start', function($serv) {
     echo "\033[93m \n\n Server: start.Swoole version is [".SWOOLE_VERSION."]";
     echo "MasterPid={$serv->master_pid}|Manager_pid={$serv->manager_pid}";
     echo "\033[92m \n\nServer Started: \n\n\nListening on ports https|443 http|80\033 \n"; 
 });
-
 
 $server->on('request', function (swoole_http_request $ser, swoole_http_response $fd) {
 global $wwwDir;
@@ -50,8 +46,6 @@ global $wwwDir;
    }  
    //Start handling static files (index.html)
    $httpSrv->handleRequest($wwwDir);
-
-
 
 });
 
