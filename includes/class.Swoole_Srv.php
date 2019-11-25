@@ -23,27 +23,24 @@ class Swoole_Srv {
  
     $this->local_uri = $wwwDir.$this->request->server['request_uri'];
       //lets see if its dir look for index.html, htm
-      if ($this->request->server['request_uri'] == "/") {
-
-        if (file_exists($this->local_uri.'index.html')) $this->local_uri = $this->local_uri.'index.html';
-        if (file_exists($this->local_uri.'index.htm')) $this->local_uri = $this->local_uri.'index.htm';
-      }
+ 
        if (is_dir($this->local_uri) && substr($this->local_uri,strlen($this->local_uri)-1,1) != "/") {
          $this->response->header('Location', $this->request->server['request_uri'].'/');
          $this->response->status(301);
           return;
        }
       
-       if (is_dir($this->local_uri) && file_exists($this->local_uri.'index.html')) {
-        $this->local_uri = $this->local_uri.'index.html';
-       }
+       if (is_dir($this->local_uri) && file_exists($this->local_uri.'index.html')) $this->local_uri = $this->local_uri.'index.html';
+       if (is_dir($this->local_uri) && file_exists($this->local_uri.'index.htm')) $this->local_uri = $this->local_uri.'index.htm';
+
+     
        if (file_exists($this->local_uri) && !is_dir($this->local_uri)) { 
         $this->SendFile($this->local_uri);
        } else {
         $this->response->status(404);
         $this->response->end('Not found ');
        }
-}
+} 
 
 public function SendFile($filename) {
  
@@ -76,11 +73,8 @@ $type = swoole_get_mime_type('ext'.strtolower($type));
 
     if ($status != 0) $this->response->status($status);
     $this->response->header("Content-Type", $type);
-    $this->response->end($response);
-    
-}
-
- 
+    $this->response->end($response);   
+  }
 }
 
 
