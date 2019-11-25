@@ -76,7 +76,6 @@ $type = swoole_get_mime_type('ext'.strtolower($type));
 
     if ($status != 0) $this->response->status($status);
     $this->response->header("Content-Type", $type);
-    $this->response->header("requestver", "ScoopScript");
     $this->response->end($response);
     
 }
