@@ -7,8 +7,7 @@ The httpd.php starts a websocket server along with the web, at both ports 80 and
 
 Useage examples:
 
-  //SendResponse(String, Mime-type, Status-code)
-
+ 
    $httpSrv->SendResponse(json_encode($resp), 'json', 200);  OR $httpSrv->SendResponse('not found', 'txt', 404);
 -
 
